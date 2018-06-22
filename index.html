@@ -11,19 +11,20 @@
 	<h1 class="h1-class">Heading Element</h1>
 
 	<script>
-		
+
 		var h1 = document.querySelector("h1");
-		console.log("Starting Classes",h1.className);
+		console.log("Starting Class",h1.className);
 
-		h1.addClass("testing addClass method");
-		console.log("Adding Classes",h1.className);
+		h1.addClass("sweet addClass method");
+		console.log("addClass ",h1.className);
 
-		h1.addClass("testing duplicate classNames");
-		console.log("More Classes",h1.className);
+		h1.addClass("sweet duplicate classNames dudes");
+		console.log("addClass ",h1.className);
 
-		h1.removeClass("addClass classNames");
-		console.log("Remove Classes",h1.className);
-	
+		h1.removeClass("h1-class addClass classNames duplicate");
+		console.log("removeClass ",h1.className);
+		
+		document.write(h1.className);
 	</script>
 </body>
 </html>
