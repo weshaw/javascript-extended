@@ -3,6 +3,11 @@ Array.prototype.unique = function()
 	return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
 };
 
+HTMLElement.prototype.hasClass = function(c)
+{
+	return this.className.split(" ").indexOf(c)>=0;
+};
+
 HTMLElement.prototype.addClass = function(c)
 {
 	this.className = this.className.split(" ").concat(c.split(" ")).unique().filter(Boolean).join(" ");
