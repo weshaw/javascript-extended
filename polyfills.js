@@ -20,3 +20,45 @@ HTMLElement.prototype.removeClass = function(c)
 	this.className = this.className.split(" ").filter(function(e){ return c.indexOf(e) < 0; }).join(" ");
 	return this;
 };
+
+HTMLElement.prototype.css = function(name,value)
+{
+	if(typeof name == "object")
+	{
+		for(var x in name)
+			{ this.style[x] = name[x]; }
+		return this;
+	}
+	else if(typeof name == "string")
+	{
+		if(typeof value != "undefined")
+		{
+			this.style[name] = value;
+			return this;
+		}
+		return window.getComputedStyle(this,null)[name];
+	}
+	return window.getComputedStyle(this,null);
+};
+
+HTMLElement.prototype.height = function(px)
+{
+	if(!isNaN(px))
+	{
+		px = parseFloat(px);
+		this.css("height",px+"px");
+		return this;
+	}
+	return parseFloat(this.css("height"));
+};
+HTMLElement.prototype.width = function(px)
+{
+	if(!isNaN(px))
+	{
+		px = parseFloat(px);
+		this.css("width",px+"px");
+		return this;
+	}
+	return parseFloat(this.css("width"));
+};
+
