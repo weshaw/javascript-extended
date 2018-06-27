@@ -62,3 +62,23 @@ HTMLElement.prototype.width = function(px)
 	return parseFloat(this.css("width"));
 };
 
+/**
+ * Runs callback for every element in array.
+ * @param function(index,ref)
+ * 		@param Int index	Loop index.
+ *		@param Array ref	Reference to array.
+ *		@return boolean True to continue; False|Null to break
+ *
+ * @return this
+ */
+Array.prototype.each = function(callback)
+{
+	var ret;
+	for (var i = 0; i < this.length; i++)
+	{
+		ret = callback.apply(this, [i, this]);
+		if (!ret && typeof ret !== 'undefined')
+			{ break; }
+	}
+	return this;
+};
