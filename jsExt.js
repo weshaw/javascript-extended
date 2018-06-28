@@ -120,3 +120,10 @@ HTMLElement.prototype.width = function(px)
 	return parseFloat(this.css("width"));
 };
 
+/**
+ * @returns {boolean}
+ */
+HTMLInputElement.prototype.hasFocus = function()
+{
+	return document.activeElement == this;
+}
