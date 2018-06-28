@@ -7,26 +7,27 @@ Array.prototype.unique = function()
 	return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
 };
 /**
- * Runs callback for every element in array.
- * @param function(index,ref)
- * 		@param Int index	Loop index.
- *		@param Mixed ref	Value of array.
- *		@return boolean True to continue; False|Null to break
- *
+ * Runs callback for every item in Object|Array.
+ * @param function(key,value,obj)
+ * 		@param Mixed key	key index.
+ *		@param Mixed ref	Value of item.
+ *		@return boolean True to continue; False to break
+ * @param thisArg Value to use as this (i.e the reference Object) when executing callback.
  * @return this
  */
-Array.prototype.each = function(callback)
+Object.prototype.each = function(callback,ref)
 {
-	var ret;
-	for (var i = 0; i < this.length; i++)
+	var ret,i,l,k;
+	ref = ref||this;
+	k = Object.keys(ref);
+	for (i=0,l=k.length;i<l;i++)
 	{
-		ret = callback.apply(this, [i, this[i]]);
+		ret = callback.apply(ref, [k[i], this[k[i]], this]);
 		if (!ret && typeof ret !== 'undefined')
 			{ break; }
 	}
 	return this;
 };
-
 /**
  * HTMLElement has this class
  * @param {string} c class name
