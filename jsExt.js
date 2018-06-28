@@ -2,10 +2,14 @@
  * filter the Array return a new array with unique values
  * @returns {Array}
  */
-Array.prototype.unique = function()
-{
-	return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
-};
+Object.defineProperty(Array.prototype, 'unique', {
+    enumerable: false,
+    value: function()
+	{
+		return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
+	}
+});
+
 /**
  * Runs callback for every item in Object|Array.
  * @param function(key,value,obj)
@@ -15,19 +19,23 @@ Array.prototype.unique = function()
  * @param thisArg Value to use as this (i.e the reference Object) when executing callback.
  * @return this
  */
-Object.prototype.each = function(callback,ref)
-{
-	var ret,i,l,k;
-	ref = ref||this;
-	k = Object.keys(ref);
-	for (i=0,l=k.length;i<l;i++)
+Object.defineProperty(Object.prototype, 'each', {
+    enumerable: false,
+    value: function(callback,ref)
 	{
-		ret = callback.apply(ref, [k[i], this[k[i]], this]);
-		if (!ret && typeof ret !== 'undefined')
-			{ break; }
+		var ret,i,l,k;
+		ref = ref||this;
+		k = Object.keys(ref);
+		for (i=0,l=k.length;i<l;i++)
+		{
+			ret = callback.apply(ref, [k[i], this[k[i]], this]);
+			if (!ret && typeof ret !== 'undefined')
+				{ break; }
+		}
+		return this;
 	}
-	return this;
-};
+});
+
 /**
  * HTMLElement has this class
  * @param {string} c class name
@@ -48,6 +56,7 @@ HTMLElement.prototype.addClass = function(c)
 	this.className = this.className.split(" ").concat(c.split(" ")).unique().filter(Boolean).join(" ");
 	return this;
 };
+
 /**
  * remove class or classes from the element (seperated with a space for multiple)
  * @param {string} c remove class(s) from an element
