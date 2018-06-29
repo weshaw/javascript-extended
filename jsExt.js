@@ -2,13 +2,16 @@
  * filter the Array return a new array with unique values
  * @returns {Array}
  */
-Object.defineProperty(Array.prototype, 'unique', {
-    enumerable: false,
-    value: function()
-	{
-		return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
-	}
-});
+if(!Array.prototype.unique)
+{
+	Object.defineProperty(Array.prototype, 'unique', {
+		enumerable: false,
+		value: function()
+		{
+			return this.filter(function(el, index, arr){ return index == arr.indexOf(el); });
+		}
+	});
+}
 
 /**
  * Runs callback for every item in Object|Array.
@@ -19,23 +22,25 @@ Object.defineProperty(Array.prototype, 'unique', {
  * @param thisArg Value to use as this (i.e the reference Object) when executing callback.
  * @return this
  */
-Object.defineProperty(Object.prototype, 'each', {
-    enumerable: false,
-    value: function(callback,ref)
-	{
-		var ret,i,l,k;
-		ref = ref||this;
-		k = Object.keys(ref);
-		for (i=0,l=k.length;i<l;i++)
+if(!Object.prototype.each)
+{
+	Object.defineProperty(Object.prototype, 'each', {
+		enumerable: false,
+		value: function(callback,ref)
 		{
-			ret = callback.apply(ref, [k[i], this[k[i]], this]);
-			if (!ret && typeof ret !== 'undefined')
-				{ break; }
+			var ret,i,l,k;
+			ref = ref||this;
+			k = Object.keys(ref);
+			for (i=0,l=k.length;i<l;i++)
+			{
+				ret = callback.apply(ref, [k[i], this[k[i]], this]);
+				if (!ret && typeof ret !== 'undefined')
+					{ break; }
+			}
+			return this;
 		}
-		return this;
-	}
-});
-
+	});
+}
 /**
  * HTMLElement has this class
  * @param {string} c class name
@@ -98,34 +103,42 @@ HTMLElement.prototype.css = function(name,value)
 };
 
 /**
- * set or get an elements height, if no value set this will return a float of the height in px,
- * otherwise it will return the element for chaining
- * @param {float} px [optional] set element style.height to this value in px
+ * Set an elements width
+ * @param {float} px set element style.width to this value in px
+ * @returns {HTMLElement} the element
  */
-HTMLElement.prototype.height = function(px)
+HTMLElement.prototype.setHeight = function(px)
 {
-	if(!isNaN(px))
-	{
-		px = parseFloat(px);
-		this.css("height",px+"px");
-		return this;
-	}
+	px = parseFloat(px);
+	this.css("height",px+"px");
+	return this;
+};
+/**
+ * get an elements width in px,
+ * @returns {float} px
+ */
+HTMLElement.prototype.getHeight = function()
+{
 	return parseFloat(this.css("height"));
 };
 
 /**
- * set or get an elements width, if no value set this will return a float of the width in px,
- * otherwise it will return the element for chaining
- * @param {float} px [optional] set element style.width to this value in px
+ * Set an elements width
+ * @param {float} px set element style.width to this value in px
+ * @returns {HTMLElement} the element
  */
-HTMLElement.prototype.width = function(px)
+HTMLElement.prototype.setWidth = function(px)
 {
-	if(!isNaN(px))
-	{
-		px = parseFloat(px);
-		this.css("width",px+"px");
-		return this;
-	}
+	px = parseFloat(px);
+	this.css("width",px+"px");
+	return this;
+};
+/**
+ * get an elements width in px,
+ * @returns {float} px
+ */
+HTMLElement.prototype.getWidth = function()
+{
 	return parseFloat(this.css("width"));
 };
 
